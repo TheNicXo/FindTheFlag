@@ -9,10 +9,11 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 
 def load_and_preprocess_data(filepath: str):
-    """Charge le dataset et prépare les variables explicatives et la cible."""
+    """Charge le dataset modernisé et extrait les variables explicatives et la cible."""
     df = pd.read_csv(filepath, header=0)
     
-    y = df["Landmass"]
+    # Utilisation directe de la colonne texte 'Landmass_Name' présente dans le nouveau CSV
+    y = df["Landmass_Name"]
     
     color_features = ["Red", "Green", "Blue", "Gold", "White", "Black", "Orange"]
     shape_features = [
@@ -25,7 +26,7 @@ def load_and_preprocess_data(filepath: str):
 
 
 def evaluate_decision_tree_depths(X, y):
-    """Analyse l'impact de max_depth pour identifier l'overfitting (Train vs Test)."""
+    """Analyse l'impact de max_depth pour identifier le seuil d'overfitting."""
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=1, stratify=y
     )
@@ -44,7 +45,7 @@ def evaluate_decision_tree_depths(X, y):
     plt.plot(depths, test_scores, label="Test Accuracy", marker="s")
     plt.xlabel("Max Depth")
     plt.ylabel("Accuracy")
-    plt.title("Évolution de la précision selon max_depth (Train vs Test)")
+    plt.title("Évolution de la précision selon max_depth (Dataset Modernisé)")
     plt.legend()
     plt.grid(True, linestyle="--", alpha=0.6)
     plt.savefig("accuracy_vs_depth.png", dpi=300)
@@ -52,7 +53,7 @@ def evaluate_decision_tree_depths(X, y):
 
 
 def optimize_hyperparameters_gridsearch(X, y):
-    """Recherche des meilleurs hyperparamètres via GridSearchCV & Cross-Validation."""
+    """Recherche des meilleurs hyperparamètres via GridSearchCV."""
     param_grid = {
         "criterion": ["gini", "entropy"],
         "max_depth": range(1, 15),
@@ -77,7 +78,7 @@ def optimize_hyperparameters_gridsearch(X, y):
 
 
 def compare_with_random_forest(X, y):
-    """Entraîne et évalue un RandomForestClassifier via Cross-Validation."""
+    """Évalue un RandomForestClassifier en 5-Fold Cross-Validation."""
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
     rf_clf = RandomForestClassifier(n_estimators=100, random_state=1)
     
@@ -88,63 +89,53 @@ def compare_with_random_forest(X, y):
 
 
 def plot_tree_and_metrics(model, X_train, X_test, y_train, y_test, feature_names):
-    """Affiche le rapport de classification, la matrice de confusion et l'arbre de décision."""
+    """Affiche les métriques et génère les visualisations haute résolution."""
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     
-    classes = [str(c) for c in sorted(y_train.unique())]
+    classes = sorted(y_train.unique())
     
-    # Rapport de classification
     print("\n--- Rapport de Classification ---")
     print(classification_report(y_test, y_pred, target_names=classes, zero_division=0))
     
-    # Affichage Importance des Features
     importances = pd.Series(model.feature_importances_, index=feature_names).sort_values(ascending=False)
     print("\n--- Importance des Features (Gini Importance) ---")
     for feat, val in importances.items():
         print(f"{feat:12s}: {val*100:.1f}%")
 
-    # Matrice de confusion
-    cm = confusion_matrix(y_test, y_pred)
-    plt.figure(figsize=(8, 6))
+    # Matrice de confusion avec continents en clair
+    cm = confusion_matrix(y_test, y_pred, labels=classes)
+    plt.figure(figsize=(9, 7))
     sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=classes, yticklabels=classes)
-    plt.title("Matrice de Confusion — Arbre de Décision")
-    plt.xlabel("Classes Prédites")
-    plt.ylabel("Classes Réelles")
+    plt.title("Matrice de Confusion — Continents Réels")
+    plt.xlabel("Continents Prédits")
+    plt.ylabel("Continents Réels")
+    plt.xticks(rotation=30, ha="right")
     plt.savefig("confusion_matrix.png", dpi=300, bbox_inches="tight")
     plt.close()
     
     # Visualisation de l'arbre
-    plt.figure(figsize=(22, 12))
+    plt.figure(figsize=(24, 12))
     plot_tree(
         model, 
         feature_names=feature_names, 
         class_names=classes, 
         filled=True, 
         rounded=True,
-        fontsize=10
+        fontsize=9
     )
     plt.savefig("decision_tree.png", dpi=300, bbox_inches="tight")
     plt.close()
 
 
 if __name__ == "__main__":
-    # 1. Chargement & Préparation
     df, X, y, feature_names = load_and_preprocess_data("flags.csv")
     
-    # 2. Séparation Train / Test
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=1, stratify=y
     )
     
-    # 3. Évaluation Train vs Test
     evaluate_decision_tree_depths(X, y)
-    
-    # 4. Optimisation via GridSearchCV (Cross-Validation)
     best_dt_model = optimize_hyperparameters_gridsearch(X_train, y_train)
-    
-    # 5. Comparaison avec Random Forest
     compare_with_random_forest(X, y)
-    
-    # 6. Évaluation finale & Génération des graphiques
     plot_tree_and_metrics(best_dt_model, X_train, X_test, y_train, y_test, feature_names)

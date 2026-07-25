@@ -198,99 +198,103 @@
             
             <div class="card">
                 <h2>📌 Problématique</h2>
-                <p>Est-il possible de prédire le continent d'appartenance d'un pays (<em>Landmass</em>) uniquement à partir des caractéristiques visuelles de son drapeau ?</p>
+                <p>Est-il possible de prédire le continent d'appartenance d'un pays (<em>Africa, Asia, Europe, North America, Oceania, South America</em>) uniquement à partir des caractéristiques visuelles de son drapeau ?</p>
                 <br>
                 <ul>
-                    <li><strong>Dataset :</strong> 194 pays enregistrés (<code>flags.csv</code>).</li>
+                    <li><strong>Dataset :</strong> Modernisé & actualisé (213 pays/territoires actifs).</li>
                     <li><strong>Features :</strong> Couleurs (7) + Formes géométriques (9).</li>
-                    <li><strong>Cible :</strong> Variable numérique représentant 6 continents.</li>
+                    <li><strong>Cible :</strong> 6 Continents réels en clair.</li>
                 </ul>
             </div>
 
             <div class="card">
                 <h2>📊 Bilan des Performances</h2>
                 <ul>
-                    <li><strong>Modèle Baseline :</strong> ~35% d'accuracy (couleurs seules).</li>
-                    <li><strong>Feature Engineering :</strong> +20% d'accuracy en ajoutant les formes (bandes, cercles, étoiles).</li>
-                    <li><strong>Optimisation (GridSearchCV) :</strong> Élimination du surapprentissage via <code>max_depth</code> optimal.</li>
-                    <li><strong>Random Forest (5-Fold CV) :</strong> Stabilité accrue et meilleure capacité de généralisation.</li>
+                    <li><strong>GridSearchCV (DecisionTree) :</strong> 43.5% d'accuracy en 5-Fold Cross-Validation (depth=7, min_leaf=4, min_split=10).</li>
+                    <li><strong>Random Forest (5-Fold CV) :</strong> 39.9% d'accuracy moyenne (+/- 5.2%).</li>
+                    <li><strong>Classe la plus prédictible :</strong> Europe (F1-Score: 0.57, Recall: 67%).</li>
                 </ul>
             </div>
 
             <div class="card full-width">
                 <h2>📊 Importance Complète des Features (Gini Importance)</h2>
-                <p>Contribution exacte de chaque caractéristique du drapeau dans la réduction de l'impureté de Gini :</p>
+                <p>Contribution exacte calculée sur le dataset modernisé :</p>
                 <br>
                 <div class="all-features-list">
                     
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Gold / Yellow (Or/Jaune)</strong></span><span>18.4%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 18.4%;"></div></div>
+                        <div class="feature-info"><span><strong>Stripes (Bandes horizontales)</strong> — Amériques & Afrique</span><span>16.7%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 16.7%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Bars (Bandes verticales)</strong></span><span>14.2%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 14.2%;"></div></div>
+                        <div class="feature-info"><span><strong>Sunstars (Soleils & Étoiles)</strong> — Asie, Amériques, Océanie</span><span>15.9%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 15.9%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Stripes (Bandes horizontales)</strong></span><span>12.1%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 12.1%;"></div></div>
+                        <div class="feature-info"><span><strong>Green (Vert)</strong> — Afrique & Monde Arabo-Musulman</span><span>12.2%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 12.2%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Green (Vert)</strong></span><span>10.5%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 10.5%;"></div></div>
+                        <div class="feature-info"><span><strong>White (Blanc)</strong> — Marqueur universel de structure</span><span>8.9%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 8.9%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Circles (Cercles)</strong></span><span>8.7%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 8.7%;"></div></div>
+                        <div class="feature-info"><span><strong>Gold / Yellow (Or/Jaune)</strong> — Afrique & Amérique du Sud</span><span>8.3%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 8.3%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Sunstars (Soleils & Étoiles)</strong></span><span>7.3%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 7.3%;"></div></div>
+                        <div class="feature-info"><span><strong>Saltires (Croix de St-André)</strong> — Europe & Caraïbes</span><span>7.6%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 7.6%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Red (Rouge)</strong></span><span>6.1%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 6.1%;"></div></div>
+                        <div class="feature-info"><span><strong>Circles (Cercles)</strong> — Asie & Océanie</span><span>6.5%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 6.5%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Blue (Bleu)</strong></span><span>5.8%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 5.8%;"></div></div>
+                        <div class="feature-info"><span><strong>Crosses (Croix)</strong> — Europe</span><span>5.7%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 5.7%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>White (Blanc)</strong></span><span>4.9%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 4.9%;"></div></div>
+                        <div class="feature-info"><span><strong>Blue (Bleu)</strong> — Europe, Océanie, Amérique du Sud</span><span>5.0%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 5.0%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Quarters (Cantons)</strong></span><span>3.8%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 3.8%;"></div></div>
+                        <div class="feature-info"><span><strong>Red (Rouge)</strong> — Omniprésent</span><span>4.6%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 4.6%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Crosses (Croix)</strong></span><span>3.1%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 3.1%;"></div></div>
+                        <div class="feature-info"><span><strong>Black (Noir)</strong> — Afrique</span><span>4.2%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 4.2%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Saltires (Croix de St-André)</strong></span><span>2.2%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 2.2%;"></div></div>
+                        <div class="feature-info"><span><strong>Bars (Bandes verticales)</strong> — Europe</span><span>4.2%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 4.2%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Crescent (Croissant de lune)</strong></span><span>1.8%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 1.8%;"></div></div>
+                        <div class="feature-info"><span><strong>Orange (Orange)</strong></span><span>0.0%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0.0%;"></div></div>
                     </div>
 
                     <div class="feature-row">
-                        <div class="feature-info"><span><strong>Black (Noir)</strong></span><span>1.1%</span></div>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 1.1%;"></div></div>
+                        <div class="feature-info"><span><strong>Quarters (Cantons)</strong></span><span>0.0%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0.0%;"></div></div>
+                    </div>
+
+                    <div class="feature-row">
+                        <div class="feature-info"><span><strong>Crescent (Croissant de lune)</strong></span><span>0.0%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0.0%;"></div></div>
                     </div>
 
                     <div class="feature-row">
@@ -309,13 +313,13 @@
 
             <div class="card">
                 <h2>🎯 Matrice de Confusion</h2>
-                <p>Répartition des prédictions correctes vs confusions entre continents :</p>
+                <p>Répartition des prédictions sur les 6 continents réels :</p>
                 <img src="confusion_matrix.png" alt="Matrice de Confusion" onclick="openModal(this.src)">
             </div>
 
             <div class="card full-width">
                 <h2>🌳 Arbre de Décision Optimal</h2>
-                <p>Visualisation complète des règles logiques apprises par le modèle (cliquez pour agrandir) :</p>
+                <p>Visualisation des règles appliquées aux vrais noms de continents :</p>
                 <img src="decision_tree.png" alt="Arbre de Décision" onclick="openModal(this.src)">
             </div>
 
