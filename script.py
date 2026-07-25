@@ -130,7 +130,7 @@ def plot_tree_and_metrics(model, X_train, X_test, y_train, y_test, feature_names
 
 if __name__ == "__main__":
     # 1. Chargement & Préparation
-    df, X, y, feature_names = load_and_preprocess_data("files/flags.csv")
+    df, X, y, feature_names = load_and_preprocess_data("flags.csv")
     
     # 2. Séparation Train / Test
     X_train, X_test, y_train, y_test = train_test_split(
