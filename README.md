@@ -1,9 +1,11 @@
 # 🚩 Find The Flag — Landmass Prediction using Decision Trees & Random Forest
 
-![Subject](https://img.shields.io/badge/Subject-Machine%20Learning%20%2F%20Classification-purple)
-![Type](https://img.shields.io/badge/Type-Supervised%20Learning-orange)
+![Subject](https://img.shields.io/badge/Subject-Data%20Science%20%2F%20AI-blue)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Decision%20Trees-purple)
+![Type](https://img.shields.io/badge/Type-Supervised%20Classification-orange)
 ![Status](https://img.shields.io/badge/Status-Portfolio%20Ready-success)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.0%2B-blue)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.0%2B-teal)
+![Python](https://img.shields.io/badge/Python-3.8%2B-yellow)
 
 Projet de Machine Learning supervisé visant à prédire le continent d'appartenance (*Africa, Asia, Europe, North America, Oceania, South America*) d'un pays à partir des caractéristiques visuelles et géométriques de son drapeau.
 
